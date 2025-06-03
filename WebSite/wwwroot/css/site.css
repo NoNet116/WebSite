@@ -1,0 +1,133 @@
+:root {
+    --bg-color: #10f977; 
+    --second-color: #8a2be2; 
+    --second-color-rgb: 229, 247, 237; 
+}
+
+.flex-body-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-header-container,
+.flex-content-container {
+    display: grid;
+    grid-template-columns: 2fr 5fr 2fr;
+    width: 100%;
+    max-width: 1300px;
+    min-width: 600px;
+}
+
+
+.flex-header-container {
+    height: 50px;
+    background: radial-gradient(ellipse, var(--bg-color), rgb(var(--second-color-rgb),0.4));
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgb(128, 128, 128);
+    position: relative;
+    overflow: hidden;
+    z-index: 9999;
+    position: fixed;
+}
+
+
+    .flex-header-container::after {
+        content: ""; /* Создает псевдоэлемент */
+        position: absolute; /* Позиционирует элемент абсолютно */
+        top: 0; /* Прикрепляет элемент к верхнему краю родителя */
+        left: 0; /* Прикрепляет элемент к левому краю родителя */
+        width: 100%; /* Ширина элемента равна ширине родителя */
+        height: 50%; /* Высота элемента составляет 50% от высоты родителя */
+        background: linear-gradient( rgba(255, 255, 200,0.6), /* Цвет сверху: белый с прозрачностью 40% */
+        rgba(255, 255, 163,0) /* Цвет снизу: полностью прозрачный белый */
+        );
+        border-top-left-radius: 5px; /* Скругление верхнего левого угла */
+        border-top-right-radius: 5px; /* Скругление верхнего правого угла */
+        pointer-events: none; /* Делает элемент невидимым для событий мыши */
+    }
+
+
+.flex-header-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+    .flex-header-item:nth-child(1),
+    .flex-content-item:nth-child(1) {
+        grid-column: 1;
+    }
+
+.flex-content-container {
+    margin-top: 60px;
+}
+
+.flex-content-item {
+    background: linear-gradient( 45deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8) );
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+
+
+    .flex-header-item:nth-child(2),
+    .flex-content-item:nth-child(2) {
+        grid-column: 2;
+    }
+
+    .flex-header-item:nth-child(3),
+    .flex-content-item:nth-child(3) {
+        grid-column: 3;
+    }
+
+.flex-content-container {
+    height: 100vh;
+}
+
+.flex-content-item {
+    justify-content: center;
+    display: flex;
+}
+
+.buttons-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.header-search form {
+    display: flex;
+    width: 150%;
+}
+
+.header-search input {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+}
+
+.flex-header-item:nth-child(2) {
+    justify-content: flex-start; /* выравнивание по левому краю */
+    gap: 10px; /* промежуток между элементами внутри, если это flex-контейнер */
+}
+
+.globalbtn {
+    margin: 1px;
+    background: radial-gradient(circle, var(--bg-color), rgb(var(--second-color-rgb),0.3));
+    border-radius: 5px;
+    font-size: 16px;
+    border: thick;
+    padding: 5px;
+}
+
+    .globalbtn:hover {
+        background: radial-gradient(circle, var(--bg-color), rgb(var(--second-color-rgb),0.1));
+        backdrop-filter: blur(10px);
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }

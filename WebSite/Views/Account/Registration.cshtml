@@ -1,0 +1,50 @@
+﻿@model WebSite.ViewModels.Account.RegisterViewModel
+@{
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+<link rel="stylesheet" href="~/css/Registration.css" asp-append-version="true" />
+
+<form method="post" asp-controller="Account" asp-action="Register" class="register-form">
+
+    <div class="form-group">
+        <input asp-for="LastName" type="text" placeholder="Фамилия" required minlength="2" maxlength="50" pattern="[A-Za-zА-Яа-яЁё-]{2,50}"/>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="FirstName" type="text" placeholder="Имя" required minlength="2" maxlength="50" pattern="[A-Za-zА-Яа-яЁё-]{2,50}" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="FatherName" type="text" placeholder="Отчество" maxlength="50" pattern="[A-Za-zА-Яа-яЁё-]{2,50}" />
+        <span asp-validation-for="FatherName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="BirthDate" type="date" placeholder="Дата рождения" required value="2000-01-01" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="UserName" type="text" placeholder="Логин" required />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="EmailReg" type="email" placeholder="Электронная почта" required value="1@1.ru" />
+        <span asp-validation-for="EmailReg" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="PasswordReg" type="password" placeholder="Пароль" required />
+        <span asp-validation-for="PasswordReg" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="PasswordConfirm" type="password" placeholder="Подтвердите пароль" required />
+        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Регистрация" class="globalbtn" />
+    </div>
+
+</form>
