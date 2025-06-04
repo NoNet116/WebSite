@@ -54,12 +54,19 @@
     align-items: center;
 }
 
+    
+
 
     .flex-header-item:nth-child(1),
     .flex-content-item:nth-child(1) {
         grid-column: 1;
     }
 
+.header-logo {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: #000; /* Цвет текста */
+    cursor: pointer; /* Меняем курсор на "рука" */
+}
 .flex-content-container {
     margin-top: 60px;
 }

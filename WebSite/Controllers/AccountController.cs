@@ -67,10 +67,10 @@ namespace WebSite.Controllers
 
             var dto = _mapper.Map<LoginViewModel, LoginUserDto>(model);
 
-            var (succeeded, errors) = await _accountService.LoginAsync(dto);
+            var (user, errors) = await _accountService.LoginAsync(dto);
 
-            if (succeeded)
-                return View("~/Views/Home/success.cshtml");
+            if (user != null)
+                return RedirectToAction("Index", "Profile", new { UserName = user.UserName});
 
             if (errors != null)
             {
@@ -85,8 +85,15 @@ namespace WebSite.Controllers
             return View("~/Views/Home/Index.cshtml", model);
         }
 
-
         
+        [HttpPost]
+     
+        public async Task<IActionResult> Logout()
+        {
+            await _accountService.LogoutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
 
     }
 }

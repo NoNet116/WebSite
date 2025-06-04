@@ -3,6 +3,7 @@ using BLL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using DAL.Entities;
+using System.Security.Claims;
 
 namespace BLL.Services;
 
@@ -21,7 +22,17 @@ namespace BLL.Services;
             _mapper = mapper;
         }
 
-        public async Task<(bool Succeeded, Dictionary<string, string>?  Errors)> RegisterAsync(RegisterUserDto model)
+    public bool IsSign(ClaimsPrincipal User)
+    {
+        return _signInManager.IsSignedIn(User);
+    }
+    public async Task<bool> LogoutAsync()
+    {
+        await _signInManager.SignOutAsync();
+        return true;
+    }
+
+    public async Task<(bool Succeeded, Dictionary<string, string>?  Errors)> RegisterAsync(RegisterUserDto model)
         {
             var errors = new Dictionary<string, string>();
 
@@ -56,7 +67,7 @@ namespace BLL.Services;
             return (true, null);
         }
 
-        public async Task<(bool Succeeded, Dictionary<string, string>? Errors)> LoginAsync(LoginUserDto model)
+        public async Task<(User? User, Dictionary<string, string>? Errors)> LoginAsync(LoginUserDto model)
         {
             var errors = new Dictionary<string, string>();
 
@@ -66,7 +77,7 @@ namespace BLL.Services;
             if (user == null)
             {
                 errors["Email"] = "Пользователь не найден.";
-                return (false, errors);
+                return (null, errors);
             }
 
             // Проверка пароля
@@ -75,10 +86,14 @@ namespace BLL.Services;
             if (!result.Succeeded)
             {
                 errors["Password"] = "Неправильный пароль.";
-                return (false, errors);
+                return (null, errors);
             }
 
-            return (true, null);
+            return (user, null);
         }
+        
+       
 
-    }
+
+   
+}

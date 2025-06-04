@@ -22,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connection));
 
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
 {
@@ -44,19 +45,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-/*using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureCreated(); // создает базу и таблицы, если их нет
-    Console.WriteLine("EnsureCreated() выполнен");
-}*/
-
-app.MapGet("/test-users", async (AppDbContext context) =>
-{
-    var users = await context.Users.ToListAsync();
-    return Results.Ok(users);
-});
-
 app.UseHttpsRedirection();
 app.UseRouting();
 
@@ -65,9 +53,16 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
+    name: "ProfileRoute",
+    pattern: "{username}",
+    defaults: new { controller = "Profile", action = "Index" }
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
 
 
 app.Run();
