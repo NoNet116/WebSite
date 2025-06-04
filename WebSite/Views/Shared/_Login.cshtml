@@ -10,12 +10,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div>
-                <input asp-for="Email" class="form-control" placeholder="email" />
+                <input asp-for="Email" class="form-control" placeholder="email" required />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div>
-                <input asp-for="Password" class="form-control" placeholder="password"  />
+                <input asp-for="Password" class="form-control" placeholder="password" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 

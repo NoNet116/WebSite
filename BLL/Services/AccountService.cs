@@ -2,10 +2,10 @@
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
-using Data.Entities;
+using DAL.Entities;
 
-namespace BLL.Services
-{
+namespace BLL.Services;
+
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
@@ -51,9 +51,34 @@ namespace BLL.Services
                 }
                 return (false, errors);
             }
-
+            
             await _signInManager.SignInAsync(user, false);
             return (true, null);
         }
+
+        public async Task<(bool Succeeded, Dictionary<string, string>? Errors)> LoginAsync(LoginUserDto model)
+        {
+            var errors = new Dictionary<string, string>();
+
+            // Ищем пользователя по логину или email
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                errors["Email"] = "Пользователь не найден.";
+                return (false, errors);
+            }
+
+            // Проверка пароля
+            var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+            {
+                errors["Password"] = "Неправильный пароль.";
+                return (false, errors);
+            }
+
+            return (true, null);
+        }
+
     }
-}

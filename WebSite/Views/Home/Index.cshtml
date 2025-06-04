@@ -1,8 +1,10 @@
-﻿@{
+﻿@model WebSite.ViewModels.Account.LoginViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 
     @section _AsideRight {
-        @await Html.PartialAsync("_Login")
+        @await Html.PartialAsync("_Login", Model)
     }
 }
 
