@@ -1,0 +1,31 @@
+﻿@{
+    @functions {
+        string GetButtonClass(string controller)
+        {
+            var current = ViewContext.RouteData.Values["controller"]?.ToString();
+            return current == controller ? "globalbtn active" : "globalbtn";
+        }
+    }
+}
+<div class="menu-column">
+    <form method="post" asp-controller="Profile" asp-action="Index">
+        <button type="submit" class="@GetButtonClass("Profile")">
+            <i class="fas fa-user"></i> Профиль
+        </button>
+    </form>
+    <form method="post" asp-controller="Message" asp-action="Index">
+        <button type="submit" class="@GetButtonClass("Message")">
+            <i class="fas fa-envelope"></i> Сообщения
+        </button>
+    </form>
+    <form method="get" asp-controller="Feed" asp-action="Index">
+        <button type="submit" class="@GetButtonClass("Feed")">
+            <i class="fas fa-stream"></i> Лента
+        </button>
+    </form>
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <button type="submit" class="globalbtn">
+            <i class="fas fa-sign-out-alt"></i> Выйти
+        </button>
+    </form>
+</div>

@@ -54,7 +54,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "ProfileRoute",
-    pattern: "{username}",
+    pattern: "{UserName:regex(^(?!Register$|Login$|About$|Contact$|Feed$).+)}",
     defaults: new { controller = "Profile", action = "Index" }
 );
 

@@ -1,6 +1,5 @@
 ﻿using BLL.DTO;
 using DAL.Entities;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace BLL.Interfaces
