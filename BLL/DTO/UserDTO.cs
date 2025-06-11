@@ -9,5 +9,6 @@ namespace BLL.DTO
         public required string Email { get; set; }
         public DateTime BirthDate { get; set; }
         public required string UserName { get; set; }
+        public string FullName => $"{LastName} {FirstName} {FatherName}".Trim();
     }
 }

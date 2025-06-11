@@ -1,65 +1,66 @@
-﻿using BLL.Interfaces;
-using DAL.Entities;
-using DAL;
-using Microsoft.EntityFrameworkCore;
+﻿using DAL.Entities;
+using BLL.DTO;
+using DAL.Interfaces;
+using BLL.Interfaces;
 
 namespace BLL.Services
 {
-    public class ArticleService:IArticleService
+    public class ArticleService: IArticleService
     {
-        private readonly AppDbContext _context;
+        private readonly IRepository<Article> _repository;
 
-        public ArticleService(AppDbContext context)
+        public ArticleService(IRepository<Article> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        // Получить все статьи (если нужно где-то)
-        public async Task<IEnumerable<Article>> GetAllAsync()
+        public async Task<IEnumerable<ArticleDto>> GetAllArticlesAsync()
         {
-            return await _context.Articles
-                .OrderByDescending(a => a.CreatedAt)
-                .ToListAsync();
-        }
+            var articles = await _repository.GetAllAsync();
 
-        // ПАГИНАЦИЯ: получить статьи постранично
-        public async Task<IEnumerable<Article>> GetPagedAsync(int page, int pageSize)
-        {
-            return await _context.Articles
-                .OrderByDescending(a => a.CreatedAt)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
-
-        // Пример: получить статью по Id
-        public async Task<Article?> GetByIdAsync(int id)
-        {
-            return await _context.Articles.FindAsync(id);
-        }
-
-        // Пример: создать статью
-        public async Task CreateAsync(Article article)
-        {
-            _context.Articles.Add(article);
-            await _context.SaveChangesAsync();
-        }
-
-        // Пример: удалить
-        public async Task DeleteAsync(int id)
-        {
-            var article = await _context.Articles.FindAsync(id);
-            if (article != null)
+            return articles.Select(a => new ArticleDto
             {
-                _context.Articles.Remove(article);
-                await _context.SaveChangesAsync();
-            }
+                
+                Id = a.Id,
+                Title = a.Title,
+                Content = a.Content,
+                CreatedAt = a.CreatedAt,
+                AuthorName = a.AuthorId,
+                Tags = a.Tags.Select(t => t.Name).ToList(),
+                CommentCount = a.Comments.Count
+            });
         }
 
-        public Task UpdateAsync(Article model)
+        public async Task<ArticleDto?> GetArticleByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var a = await _repository.GetByIdAsync(id);
+            if (a == null) return null;
+
+            return new ArticleDto
+            {
+                Id = a.Id,
+                Title = a.Title,
+                Content = a.Content,
+                CreatedAt = a.CreatedAt,
+                AuthorName = a.Author.LastName,
+                Tags = a.Tags.Select(t => t.Name).ToList(),
+                CommentCount = a.Comments.Count
+            };
+        }
+
+        public async Task CreateArticleAsync(ArticleDto model, User author)
+        {
+            var article = new Article
+            {
+                Title = model.Title,
+                Content = model.Content,
+                CreatedAt = DateTime.UtcNow,
+                Author = author,
+                Tags = model.Tags.Select(t => new Tag { Name = t }).ToList()
+            };
+            await _repository.AddAsync(article);
         }
     }
+
 }
 

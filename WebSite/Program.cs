@@ -2,6 +2,8 @@ using BLL.Interfaces;
 using BLL.Services;
 using DAL;
 using DAL.Entities;
+using DAL.Interfaces;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,7 +23,9 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connection));
 
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
@@ -54,7 +58,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "ProfileRoute",
-    pattern: "{UserName:regex(^(?!Register$|Login$|About$|Contact$|Feed$).+)}",
+    pattern: "{UserName:regex(^(?!Register$|Login$|About$|Contact$|Feed$|Article$).+)}",
     defaults: new { controller = "Profile", action = "Index" }
 );
 

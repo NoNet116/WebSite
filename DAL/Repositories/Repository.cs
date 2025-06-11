@@ -22,32 +22,36 @@ public class Repository<T> : IRepository<T> where T : class
         Set = set;
     }
 
-    public void Create(T item)
+  
+    public virtual async Task<IEnumerable<T>> GetAllAsync()
     {
-        Set.Add(item);
-        _db.SaveChanges();
+        var g = await Set.ToListAsync(); 
+        return g;
+    }
+   
+
+    public async Task<T?> GetByIdAsync(int id)
+    {
+        return await Set.FindAsync(id);
     }
 
-    public void Delete(T item)
+    public async Task AddAsync(T entity)
     {
-        Set.Remove(item);
-        _db.SaveChanges();
+        await Set.AddAsync(entity);
+        await _db.SaveChangesAsync();
     }
 
-    public T Get(int id)
+    public async Task UpdateAsync(T entity)
     {
-        return Set.Find(id);
+        Set.Update(entity);
+        await _db.SaveChangesAsync();
     }
 
-    public IEnumerable<T> GetAll()
+    public async Task DeleteAsync(T Item)
     {
-        return Set;
+        Set.Remove(Item);
+        await _db.SaveChangesAsync();
     }
 
-    public void Update(T item)
-    {
-        Set.Update(item);
-        _db.SaveChanges();
-    }
 }
 

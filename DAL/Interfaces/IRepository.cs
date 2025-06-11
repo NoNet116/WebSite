@@ -1,11 +1,11 @@
 ﻿namespace DAL.Interfaces;
 public interface IRepository<T> where T : class
 {
-    IEnumerable<T> GetAll();
-    T Get(int id);
-    void Create(T item);
-    void Update(T item);
-    void Delete(T item);
+    Task<IEnumerable<T>> GetAllAsync();
+    Task<T?> GetByIdAsync(int id);
+    Task AddAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(T Item);
 }
 
 

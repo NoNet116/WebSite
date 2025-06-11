@@ -28,5 +28,9 @@ namespace DAL.Entities
 
         [MaxLength(500)]
         public string? About { get; set; }
+        public ICollection<Article>? Articles { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
+
+
     }
 }

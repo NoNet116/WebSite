@@ -1,0 +1,19 @@
+﻿@model WebSite.ViewModels.ArticleViewModel
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+        <span asp-validation-for="Title"></span>
+    </div>
+    <div>
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content"></textarea>
+        <span asp-validation-for="Content"></span>
+    </div>
+    <div>
+        <label>Tags (через запятую)</label>
+        <input name="TagsInput" />
+    </div>
+    <button type="submit">Создать</button>
+</form>

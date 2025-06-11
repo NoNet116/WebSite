@@ -32,7 +32,7 @@ namespace BLL.Services;
         return true;
     }
 
-    public async Task<(bool Succeeded, Dictionary<string, string>?  Errors)> RegisterAsync(RegisterUserDto model)
+    public async Task<(bool Succeeded, Dictionary<string, string>?  Errors)> RegisterAsync(RegisterUserDTO model)
         {
             var errors = new Dictionary<string, string>();
 
@@ -62,12 +62,10 @@ namespace BLL.Services;
                 }
                 return (false, errors);
             }
-            
-            await _signInManager.SignInAsync(user, false);
             return (true, null);
         }
 
-        public async Task<(User? User, Dictionary<string, string>? Errors)> LoginAsync(LoginUserDto model)
+        public async Task<(User? User, Dictionary<string, string>? Errors)> LoginAsync(LoginUserDTO model)
         {
             var errors = new Dictionary<string, string>();
 

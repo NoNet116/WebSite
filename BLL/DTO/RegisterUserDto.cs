@@ -1,6 +1,6 @@
 ﻿namespace BLL.DTO
 {
-    public class RegisterUserDto
+    public class RegisterUserDTO
     {
         public required string LastName { get; set; }
         public required string FirstName { get; set; }

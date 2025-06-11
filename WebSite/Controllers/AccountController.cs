@@ -35,7 +35,7 @@ namespace WebSite.Controllers
             if (!ModelState.IsValid)
                 return View("Registration", model);
 
-            var dto = _mapper.Map<RegisterViewModel, RegisterUserDto>(model);
+            var dto = _mapper.Map<RegisterViewModel, RegisterUserDTO>(model);
 
             var (succeeded, errors) = await _accountService.RegisterAsync(dto);
 
@@ -65,7 +65,7 @@ namespace WebSite.Controllers
             if (!ModelState.IsValid)
                 return View("~/Views/Home/Index.cshtml", model);
 
-            var dto = _mapper.Map<LoginViewModel, LoginUserDto>(model);
+            var dto = _mapper.Map<LoginViewModel, LoginUserDTO>(model);
 
             var (user, errors) = await _accountService.LoginAsync(dto);
 

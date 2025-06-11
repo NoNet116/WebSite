@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BLL.DTO.ArticleDto>
+@{
+    @section _AsideLeft {
+        @await Html.PartialAsync("_MenuNavigation")
+    }
+    @section _AsideRight {
+        @await Html.PartialAsync("_FeedMenu")
+    }
+}
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Контент</th>
+            <th>Дата</th>
+            <th>Автор</th>
+            <th>Теги</th>
+            <th>Комментарии</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var article in Model)
+        {
+            <tr>
+                <td>@article.Title</td>
+                <td>@article.Content</td>
+                <td>@article.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@article.AuthorName</td>
+                <td>
+                    @foreach (var tag in article.Tags)
+                    {
+                        <span class="badge bg-primary">@tag</span>
+                    }
+                </td>
+                <td>@article.CommentCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

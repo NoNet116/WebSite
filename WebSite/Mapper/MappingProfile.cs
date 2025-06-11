@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.DTO;
 using DAL.Entities;
+using WebSite.ViewModels;
 using WebSite.ViewModels.Account;
 
 namespace WebSite.Mapper
@@ -10,16 +11,27 @@ namespace WebSite.Mapper
         public MappingProfile()
         {
             // ViewModel → DTO
-            CreateMap<RegisterViewModel, RegisterUserDto>()
+            CreateMap<RegisterViewModel, RegisterUserDTO>()
                  .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.PasswordReg));
 
             // DTO → User Entity
-            CreateMap<RegisterUserDto, User>()
+            CreateMap<RegisterUserDTO, User>()
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.EmailReg))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
 
-            CreateMap<LoginViewModel, LoginUserDto>()
+            CreateMap<LoginViewModel, LoginUserDTO>()
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
+
+            // ArticleViewModel => ArticleDTO
+            CreateMap<ArticleViewModel, ArticleDto>()
+                // DTO требует Id, CreatedAt, AuthorName и CommentCount, которых нет во ViewModel, можно игнорировать или задать по умолчанию
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.AuthorName, opt => opt.Ignore())
+                .ForMember(dest => dest.CommentCount, opt => opt.Ignore())
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags));
+
+          
         }
     }
 }

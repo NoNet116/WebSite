@@ -1,14 +1,16 @@
-﻿namespace BLL.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebSite.ViewModels
 {
-    public class ArticleDto
+    public class ArticleViewModel
     {
-        public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
-        public string AuthorName { get; set; } = string.Empty;
         public List<string> Tags { get; set; } = new();
-        public int CommentCount { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
+        public string AuthorName { get; set; } = string.Empty;
+        public int CommentCount { get; set; }
     }
 }
