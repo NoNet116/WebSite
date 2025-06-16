@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DAL.Repositories;
 
@@ -25,10 +26,20 @@ public class Repository<T> : IRepository<T> where T : class
   
     public virtual async Task<IEnumerable<T>> GetAllAsync()
     {
-        var g = await Set.ToListAsync(); 
-        return g;
+        return await Set.ToListAsync(); 
     }
-   
+    public virtual async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = Set;
+
+        foreach (var include in includes)
+        {
+            query = query.Include(include);
+        }
+
+        return await query.ToListAsync();
+    }
+
 
     public async Task<T?> GetByIdAsync(int id)
     {
@@ -42,6 +53,7 @@ public class Repository<T> : IRepository<T> where T : class
     }
 
     public async Task UpdateAsync(T entity)
+
     {
         Set.Update(entity);
         await _db.SaveChangesAsync();

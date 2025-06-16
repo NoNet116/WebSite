@@ -5,8 +5,8 @@ using DAL.Entities;
 namespace BLL.Interfaces;
 public interface IArticleService
 {
-    Task CreateArticleAsync(ArticleDto model, User author);
-    Task<IEnumerable<ArticleDto>?> GetAllArticlesAsync();
+    Task CreateArticleAsync(ArticleDTO model, User author);
+    Task<IEnumerable<ArticleDTO>?> GetAllArticlesAsync();
    // Task DeleteAsync(int id);
     //Task<Article?> GetByIdAsync(int id);
     //Task UpdateAsync(Article model);

@@ -1,0 +1,104 @@
+﻿/* Общий контейнер */
+.article-feed {
+    
+    width:100%;
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Один "пост" */
+.article-post {
+    background-color: #ffffff;
+    border: 1px solid #d3d9de;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Заголовок и дата */
+.article-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.article-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: #2c2d2e;
+}
+
+.article-date {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Контент */
+.article-post-content p {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Теги */
+.article-post-tags {
+    margin-top: 0.5rem;
+}
+
+.article-tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
+    padding: 0.3rem 0.6rem;
+    background-color: #e0ecf4;
+    color: #24577a;
+    font-size: 0.85rem;
+    border-radius: 4px;
+}
+
+/* Футер */
+
+/* Комментарии — вывод кол-ва */
+.article-comments {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Контейнер формы комментария */
+.comment-form {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+/* Поле ввода */
+.comment-input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    margin-right: 0.5rem;
+}
+
+/* Кнопка отправки */
+.comment-send-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    background-color: #4c75a3; /* синий VK */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+    .comment-send-button:hover {
+        background-color: #3b5f85;
+    }
+

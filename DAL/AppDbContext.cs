@@ -13,4 +13,13 @@ public class AppDbContext : IdentityDbContext<User>
         Database.EnsureCreated();
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Article>()
+            .HasMany(a => a.Tags)
+            .WithMany(t => t.Articles)
+            .UsingEntity(j => j.ToTable("ArticleTags")); // имя таблицы-связки
+    }
 }

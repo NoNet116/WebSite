@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTO;
 using BLL.Interfaces;
-using BLL.Services;
-using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using WebSite.ViewModels;
 
@@ -29,7 +27,11 @@ namespace WebSite.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var dto = _mapper.Map<ArticleViewModel,ArticleDto>(model);
+            model.Tags = model.TagsInput?
+        .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+        .ToList();
+
+            var dto = _mapper.Map<ArticleViewModel,ArticleDTO>(model);
 
             var user = await _userService.GetUserAsync(User);
 
@@ -41,9 +43,11 @@ namespace WebSite.Controllers
          public async Task<IActionResult> Index()
           {
             var articles = await _articleService.GetAllArticlesAsync();
+            var viewModel = articles?
+                .Select(article => _mapper.Map<ArticleViewModel>(article));
             
-            return View(articles);
-          }
+            return View(viewModel);
+        }
         /* 
           [HttpGet]
           public async Task<IActionResult> LoadMore(int page = 1, int pageSize = 5)

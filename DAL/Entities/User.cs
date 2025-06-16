@@ -14,7 +14,7 @@ namespace DAL.Entities
 
         [MaxLength(50)]
         public string? FatherName { get; set; }
-
+        
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTimeOffset? BirthDate { get; set; }

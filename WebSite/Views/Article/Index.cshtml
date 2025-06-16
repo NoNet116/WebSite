@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BLL.DTO.ArticleDto>
+﻿@model IEnumerable<WebSite.ViewModels.ArticleViewModel>
 @{
     @section _AsideLeft {
         @await Html.PartialAsync("_MenuNavigation")
@@ -7,35 +7,35 @@
         @await Html.PartialAsync("_FeedMenu")
     }
 }
-<h2>@ViewData["Title"]</h2>
+<link rel="stylesheet" href="~/css/articles.css" />
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Название</th>
-            <th>Контент</th>
-            <th>Дата</th>
-            <th>Автор</th>
-            <th>Теги</th>
-            <th>Комментарии</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var article in Model)
-        {
-            <tr>
-                <td>@article.Title</td>
-                <td>@article.Content</td>
-                <td>@article.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
-                <td>@article.AuthorName</td>
-                <td>
-                    @foreach (var tag in article.Tags)
-                    {
-                        <span class="badge bg-primary">@tag</span>
-                    }
-                </td>
-                <td>@article.CommentCount</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="article-feed">
+    @foreach (var article in Model)
+    {
+        <div class="article-post">
+            <div class="article-post-header">
+                <h2 class="article-title">@article.Title</h2>
+                <span class="article-date">@article.CreatedDate.ToString("dd.MM.yyyy HH:mm")</span>
+            </div>
+            <div class="article-post-content">
+                <p>@article.Content</p>
+            </div>
+
+            <div class="article-post-tags">
+                @foreach (var tag in article.Tags)
+                {
+                    <span class="article-tag">#@tag</span>
+                }
+            </div>
+            <div class="article-post-footer">
+                <span class="article-comments">💬 @article.CommentCount комментариев</span>
+            </div>
+
+            <div class="article-post-footer comment-form">
+                <input class="comment-input" type="text" placeholder="Написать комментарий..." />
+                <button class="comment-send-button">Отправить</button>
+            </div>
+
+        </div>
+    }
+</div>
